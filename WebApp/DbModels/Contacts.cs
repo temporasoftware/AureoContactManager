@@ -17,12 +17,15 @@ namespace WebApp.DbModels
         [StringLength(32)]
         public string Id { get; set; }
 
+        [Required(ErrorMessage = "Field required")]
         [StringLength(60, ErrorMessage = "The Name field cannot have more than 60 characters")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Field required")]
         [StringLength(9, ErrorMessage = "The Contact field cannot have more than 9 characters")]
         public string Contact { get; set; }
 
+        [Required(ErrorMessage = "Field required")]
         [StringLength(60, ErrorMessage = "The Contact field cannot have more than 60 characters")]
         [EmailAddress(ErrorMessage = "The email address is invalid.")]
         public string Email { get; set; }

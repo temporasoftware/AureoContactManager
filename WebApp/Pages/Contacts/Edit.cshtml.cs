@@ -62,6 +62,7 @@ namespace WebApp.Pages.Contacts
                 else
                 {
                     ModelState.AddModelError("", _service.Error);
+                    EditMode = EditPageMode.AddNew;
                     return Page();
                 }
             }
@@ -71,6 +72,7 @@ namespace WebApp.Pages.Contacts
                     return RedirectToPage("./Index");
                 else
                 {
+                    EditMode = EditPageMode.Edit;
                     ModelState.AddModelError("", _service.Error);
                     return Page();
                 }

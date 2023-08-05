@@ -27,13 +27,13 @@ namespace WebApp.AppServices
                 return false;
             }
 
-            if (Context.Contacts.Where(a => a.Email == contact.Email && a.Id != contact.Id).Any())
+            if (Context.Contacts.Where(a => a.Email == contact.Email && a.Id != contact.Id && a.Audit_RecordStatus == false).Any())
             {
                 Error = "There is already a record with this email";
                 return false;
             }
 
-            if (Context.Contacts.Where(a => a.Contact == contact.Contact && a.Id != contact.Id).Any())
+            if (Context.Contacts.Where(a => a.Contact == contact.Contact && a.Id != contact.Id && a.Audit_RecordStatus == false).Any())
             {
                 Error = "There is already a record with this contact information";
                 return false;

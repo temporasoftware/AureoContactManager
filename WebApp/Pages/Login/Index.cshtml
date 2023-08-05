@@ -1,0 +1,23 @@
+﻿@page
+@model WebApp.Pages.Login.IndexModel
+@{
+}
+
+<form method="post">
+    <div class="validation-summary-errors">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+
+    <div>
+        <label for="Email">Email:</label>
+        <input asp-for="Login.UserName" id="UserName" class="form-control" type="text" />
+        <span asp-validation-for="Login.UserName" class="text-danger"></span>
+    </div>
+    <div>
+        <label for="Password">Password:</label>
+        <input asp-for="Login.Password" id="Password" class="form-control" type="password" />
+        <span asp-validation-for="Login.Password" class="text-danger"></span>
+    </div>
+    <a class="btn btn-warning" asp-page="../Index" asp-route-id="">Cancel</a>
+    <button class="btn btn-primary" type="submit">Login</button>
+</form>

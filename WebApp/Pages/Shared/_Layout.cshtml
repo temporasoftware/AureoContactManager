@@ -1,4 +1,7 @@
-﻿<!doctype html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+<!doctype html>
 <html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
@@ -20,9 +23,6 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Contacts/Index">Contacts</a>
                     </li>
@@ -54,8 +54,6 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     
-    <script src="assets/js/popper.min.js"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
