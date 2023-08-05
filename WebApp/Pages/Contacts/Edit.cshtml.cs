@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using static WebApp.Helpers.EditPageHelpers;
 
 namespace WebApp.Pages.Contacts
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly IContactsService _service;

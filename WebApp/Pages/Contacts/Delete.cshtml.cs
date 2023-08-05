@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.AppServices;
 
 namespace WebApp.Pages.Contacts
 {
+    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly IContactsService _service;
