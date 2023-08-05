@@ -1,4 +1,5 @@
-﻿using WebApp.DbInfra;
+﻿using Microsoft.EntityFrameworkCore;
+using WebApp.DbInfra;
 using WebApp.DbModels;
 
 namespace WebApp.AppServices
@@ -22,6 +23,11 @@ namespace WebApp.AppServices
                 return true;
             else 
                 return false;
+        }
+
+        public Task<List<Contacts>> GetAll()
+        {
+            return Context.Contacts.AsNoTracking().ToListAsync();
         }
     }
 }

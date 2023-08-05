@@ -6,6 +6,7 @@ namespace WebApp.AppServices
     {
 
         Task<bool> AddNew(Contacts contact);
+        Task<List<Contacts>> GetAll();
 
     }
 }
