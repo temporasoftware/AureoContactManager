@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApp.DbInfra;
 using WebApp.DbModels;
+using WebApp.DbModels.Dto;
 
 namespace WebApp.AppServices
 {
@@ -25,14 +26,34 @@ namespace WebApp.AppServices
                 return false;
         }
 
-        public Task<List<Contacts>> GetAll()
+        public async Task<List<Contacts>> GetAll()
         {
-            return Context.Contacts.AsNoTracking().ToListAsync();
+            return await Context.Contacts.AsNoTracking().OrderBy(a => a.Name).ToListAsync();
         }
 
-        public Task<Contacts> Get(string recordId)
+        public async Task<Contacts> Get(string recordId)
         {
-            return Context.Contacts.AsNoTracking().Where(a => a.Id == recordId).FirstOrDefaultAsync();  
+            return await Context.Contacts.AsNoTracking().Where(a => a.Id == recordId).FirstOrDefaultAsync();  
+        }
+
+        public async Task<PagedTableReturnDto<Contacts>> GetPaged(int page)
+        {
+            var pageSize = 10;
+
+            if (page < 1)
+                page = 1;
+
+            var totalRows = await Context.Contacts.AsNoTracking().CountAsync();
+
+            var records = new PagedTableReturnDto<Contacts>()
+            {
+                Result = await Context.Contacts.Skip((page - 1) * pageSize).Take(pageSize).AsNoTracking().OrderBy(a=> a.Name).ToListAsync(),
+                CurrentPage = page,
+                PageCount = (int)Math.Ceiling((double)totalRows / pageSize),
+                TotalRecords = totalRows
+            };
+
+            return records;
         }
     }
 }

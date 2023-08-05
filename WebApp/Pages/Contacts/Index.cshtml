@@ -13,19 +13,19 @@
             <th>Name</th>
             <th>Contact</th>
             <th>Email</th>
-            <th>Actions</th>
+            <th style="text-align:center">Actions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Contacts)
+        @foreach (var item in Model.ContactsPage.Result)
         {
             <tr class="clickable-row" data-href='@Url.Page("./Edit", new { id = item.Id })'>
                 <td>@item.Name</td>
                 <td>@item.Contact</td>
                 <td>@item.Email</td>
                 <td>
-                    <a class="btn btn-outline-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id" asp-route-edit="true">Edit</a> |
-                    <a class="btn btn-sm" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-outline-danger btn-sm me-5" asp-page="./Delete" asp-route-id="@item.Id" asp-route-delete="true">Delete</a>
+                    <a class="btn btn-outline-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id" asp-route-edit="true">Edit</a>
                 </td>
             </tr>
         }
@@ -33,14 +33,25 @@
 </table>
 
 <div class="pagination">
-    <a href="#">&laquo;</a>
-    <a href="#">1</a>
-    <a href="#" class="active">2</a>
-    <a href="#">3</a>
-    <a href="#">4</a>
-    <a href="#">5</a>
-    <a href="#">6</a>
-    <a href="#">&raquo;</a>
+    @if(Model.ContactsPage.CurrentPage > 1)
+    {
+        <a asp-page="./Index" asp-route-page="@(Model.ContactsPage.CurrentPage -1)">&laquo;</a>    
+    }
+    @for (int i = Model.ContactsPage.CurrentPage; i <= Model.ContactsPage.PageCount; i++)
+    {
+        @if (Model.ContactsPage.CurrentPage == i)
+        {
+            <a href="javascript:;" class="active">@i.ToString()</a>
+        }
+        else
+        {
+            <a asp-page="./Index" asp-route-id="@i.ToString()">@i.ToString()</a>
+        }
+    }
+    @if (Model.ContactsPage.CurrentPage < Model.ContactsPage.PageCount)
+    {
+        <a asp-page="./Index" asp-route-page="@(Model.ContactsPage.CurrentPage -1)">&raquo;</a>
+    }
 </div>
 
 @section Scripts {

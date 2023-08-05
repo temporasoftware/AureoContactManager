@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.AppServices;
+using WebApp.DbModels.Dto;
 
 namespace WebApp.Pages.Contacts
 {
@@ -12,11 +13,12 @@ namespace WebApp.Pages.Contacts
         {
             _service = theService;
         }
-        public IList<DbModels.Contacts> Contacts { get; set; }
+        public PagedTableReturnDto<DbModels.Contacts> ContactsPage { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int id)
         {
-            Contacts = await _service.GetAll();
+            ContactsPage = await _service.GetPaged(id);
+
         }
     }
 }
