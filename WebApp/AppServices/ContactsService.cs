@@ -14,10 +14,14 @@ namespace WebApp.AppServices
             Context = theContext;
         }
 
-
-        public Task<bool> AddNew()
+        public async Task<bool> AddNew(Contacts contact)
         {
-            throw new NotImplementedException();
+            Context.Contacts.Add(contact);
+
+            if (await Context.SaveChangesAsync() > 0)
+                return true;
+            else 
+                return false;
         }
     }
 }

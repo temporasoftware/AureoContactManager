@@ -1,9 +1,11 @@
-﻿namespace WebApp.AppServices
+﻿using WebApp.DbModels;
+
+namespace WebApp.AppServices
 {
     public interface IContactsService
     {
 
-        Task<bool> AddNew();
+        Task<bool> AddNew(Contacts contact);
 
     }
 }
