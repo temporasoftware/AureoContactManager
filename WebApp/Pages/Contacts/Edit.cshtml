@@ -16,6 +16,7 @@
     </div>
 
     <input type="hidden" asp-for="Contact.Id" />
+    <input type="hidden" asp-for="Contact.Audit_RecordStatus" />
 
     <div class="form-group mb-3">
         <label for="Name">Name:</label>
@@ -36,5 +37,9 @@
     @if (Model.EditMode != Helpers.EditPageHelpers.EditPageMode.View)
     {
         <button class="btn btn-primary" type="submit">@(Model.EditMode == WebApp.Helpers.EditPageHelpers.EditPageMode.Edit ? "Save Changes" : "Save New")</button>
+    }
+    @if (Model.Contact.Audit_RecordStatus)
+    {
+        <a class="btn btn-danger me-5" asp-page="./Delete" asp-route-id="@Model.Contact.Id">Delete</a>
     }
 </form>

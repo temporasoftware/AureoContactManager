@@ -19,7 +19,7 @@ namespace WebApp.AppServices
 
         public async Task<bool> Save(Contacts contact)
         {
-            var currentRecord = await Context.Contacts.FirstOrDefaultAsync(c => c.Id == contact.Id);
+            var currentRecord = await Context.Contacts.FirstOrDefaultAsync(c => c.Id == contact.Id && c.Audit_RecordStatus == false);
 
             if (currentRecord == null)
             {
@@ -43,6 +43,8 @@ namespace WebApp.AppServices
             currentRecord.Contact = contact.Contact;
             currentRecord.Name = contact.Name;
 
+            Context.Contacts.Update(currentRecord);
+
             if (await Context.SaveChangesAsync() > 0)
                 return true;
             else
@@ -55,13 +57,13 @@ namespace WebApp.AppServices
 
         public async Task<bool> AddNew(Contacts contact)
         {
-            if(Context.Contacts.Where(a => a.Email == contact.Email).Any())
+            if(Context.Contacts.Where(a => a.Email == contact.Email && a.Audit_RecordStatus == false).Any())
             {
                 Error = "There is already a record with this email";
                 return false;
             }
 
-            if (Context.Contacts.Where(a => a.Contact == contact.Contact).Any())
+            if (Context.Contacts.Where(a => a.Contact == contact.Contact && a.Audit_RecordStatus == false).Any())
             {
                 Error = "There is already a record with this contact information";
                 return false;
@@ -75,7 +77,7 @@ namespace WebApp.AppServices
                 Name = contact.Name
             };
 
-            Context.Contacts.Add(contact);
+            await Context.Contacts.AddAsync(contact);
 
             if (await Context.SaveChangesAsync() > 0)
                 return true;
@@ -88,12 +90,12 @@ namespace WebApp.AppServices
 
         public async Task<List<Contacts>> GetAll()
         {
-            return await Context.Contacts.AsNoTracking().OrderBy(a => a.Name).ToListAsync();
+            return await Context.Contacts.Where(a => a.Audit_RecordStatus == false).AsNoTracking().OrderBy(a => a.Name).ToListAsync();
         }
 
         public async Task<Contacts> Get(string recordId)
         {
-            return await Context.Contacts.AsNoTracking().Where(a => a.Id == recordId).FirstOrDefaultAsync();  
+            return await Context.Contacts.Where(a => a.Audit_RecordStatus == false).AsNoTracking().Where(a => a.Id == recordId).FirstOrDefaultAsync();  
         }
 
         public async Task<PagedTableReturnDto<Contacts>> GetPaged(int page)
@@ -103,11 +105,11 @@ namespace WebApp.AppServices
             if (page < 1)
                 page = 1;
 
-            var totalRows = await Context.Contacts.AsNoTracking().CountAsync();
+            var totalRows = await Context.Contacts.Where(a => a.Audit_RecordStatus == false).AsNoTracking().CountAsync();
 
             var records = new PagedTableReturnDto<Contacts>()
             {
-                Result = await Context.Contacts.OrderBy(a => a.Name).Skip((page - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync(),
+                Result = await Context.Contacts.Where(a => a.Audit_RecordStatus == false).OrderBy(a => a.Name).Skip((page - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync(),
                 CurrentPage = page,
                 PageCount = (int)Math.Ceiling((double)totalRows / pageSize),
                 TotalRecords = totalRows
@@ -116,6 +118,15 @@ namespace WebApp.AppServices
             return records;
         }
 
-
+        public async Task<bool> Delete(string recordId)
+        {
+            var record = await Context.Contacts.Where(a => a.Audit_RecordStatus == false).Where(a => a.Id == recordId).FirstOrDefaultAsync();
+            if (record != null) {
+                record.Audit_RecordStatus = true;
+                Context.Update(record);
+                await Context.SaveChangesAsync();
+            }
+            return true;
+        }
     }
 }

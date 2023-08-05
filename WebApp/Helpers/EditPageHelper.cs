@@ -8,7 +8,7 @@
             None = 0,
             View = 1,
             Edit = 2,
-            AddNew = 3,
+            AddNew = 3
         }
 
 

@@ -15,7 +15,7 @@ namespace WebApp.Pages.Contacts
             _service = theService;
         }
 
-        public async Task<IActionResult> OnGetAsync(string id, bool edit)
+        public async Task<IActionResult> OnGetAsync(string id, bool edit, bool delete)
         {
             if (!string.IsNullOrWhiteSpace(id))
             {
@@ -35,6 +35,12 @@ namespace WebApp.Pages.Contacts
 
             if (Contact == null)
                 return RedirectToPage("./Index");
+
+            if (delete)
+            {
+                Contact.Audit_RecordStatus = true;
+            }
+
 
             return Page();
         }
@@ -70,7 +76,6 @@ namespace WebApp.Pages.Contacts
                 }
             }
 
-            return Page();
         }
     }
 }

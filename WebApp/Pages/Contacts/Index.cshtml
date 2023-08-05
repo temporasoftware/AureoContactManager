@@ -24,7 +24,7 @@
                 <td>@item.Contact</td>
                 <td>@item.Email</td>
                 <td>
-                    <a class="btn btn-outline-danger btn-sm me-5" asp-page="./Delete" asp-route-id="@item.Id" asp-route-delete="true">Delete</a>
+                    <a class="btn btn-outline-danger btn-sm me-5" asp-page="./Edit" asp-route-id="@item.Id" asp-route-delete="true">Delete</a>
                     <a class="btn btn-outline-primary btn-sm" asp-page="./Edit" asp-route-id="@item.Id" asp-route-edit="true">Edit</a>
                 </td>
             </tr>
