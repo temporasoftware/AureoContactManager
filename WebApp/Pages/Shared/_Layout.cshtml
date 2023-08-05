@@ -1,50 +1,60 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿<!doctype html>
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Aureo Lopes Contacts Manager</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Contacts/">Contacts</a>
-                        </li>
-                    </ul>
-                </div>
+<body class="d-flex flex-column h-100">
+
+    <div class="container pt-4 pb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+            <a class="navbar-brand" style="padding:0 10px 0 20px;" asp-area="" asp-page="/Index">Aureo Lopes Contacts Manager</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Contacts/Index">Contacts</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-md-0" style="display:none;">
+                    <input class="form-control" type="text" placeholder="Search" aria-label="Search">
+                </form>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <main role="main" class="flex-shrink-0">
         <div class="container">
-            &copy; 1978-2023 - Áureo Lopes de Souza Contacts Manager - <a target="_blank" href="https://github.com/temporasoftware/AureoContactManager">Github Project Repository</a> - <a target="_blank" href="https://www.linkedin.com/in/aureo-lopes-96a21956/">Aureo's Linkedin</a>
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="footer mt-auto py-3">
+        <div class="container pb-5">
+            <hr>
+            <span class="text-muted">
+                &copy; 1978-2023 - Áureo Lopes de Souza Contacts Manager - <a target="_blank" href="https://github.com/temporasoftware/AureoContactManager">Github Project Repository</a> - <a target="_blank" href="https://www.linkedin.com/in/aureo-lopes-96a21956/">Aureo's Linkedin</a>
+            </span>
         </div>
     </footer>
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="assets/js/popper.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
