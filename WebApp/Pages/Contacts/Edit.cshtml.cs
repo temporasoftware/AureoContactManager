@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebApp.AppServices;
-using WebApp.DbModels;
 
-namespace WebApp.Pages
+namespace WebApp.Pages.Contacts
 {
-    public class ContactsEditModel : PageModel
+    public class EditModel : PageModel
     {
-
         private readonly IContactsService _service;
 
-        public ContactsEditModel(IContactsService theService)
+        public EditModel(IContactsService theService)
         {
             _service = theService;
         }
@@ -20,7 +18,7 @@ namespace WebApp.Pages
         }
 
         [BindProperty]
-        public Contacts Contact { get; set; }
+        public DbModels.Contacts Contact { get; set; }
 
 
         public async Task<IActionResult> OnPostAsync()
@@ -33,9 +31,5 @@ namespace WebApp.Pages
             else
                 return Page();
         }
-
-
     }
-
-
 }

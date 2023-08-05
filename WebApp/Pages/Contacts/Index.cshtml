@@ -1,0 +1,33 @@
+﻿@page
+@model WebApp.Pages.Contacts.IndexModel
+@{
+}
+
+<h2>Contacts List</h2>
+
+<a asp-page="./Edit" asp-route-id="">Add New</a>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Contacts)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Contact</td>
+                <td>@item.Email</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
