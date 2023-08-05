@@ -77,7 +77,7 @@ namespace WebApp.AppServices
                 Name = contact.Name
             };
 
-            await Context.Contacts.AddAsync(contact);
+            await Context.Contacts.AddAsync(newRecord);
 
             if (await Context.SaveChangesAsync() > 0)
                 return true;

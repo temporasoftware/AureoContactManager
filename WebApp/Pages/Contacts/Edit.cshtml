@@ -38,8 +38,15 @@
     {
         <button class="btn btn-primary" type="submit">@(Model.EditMode == WebApp.Helpers.EditPageHelpers.EditPageMode.Edit ? "Save Changes" : "Save New")</button>
     }
-    @if (Model.Contact.Audit_RecordStatus)
+    else
     {
-        <a class="btn btn-danger me-5" asp-page="./Delete" asp-route-id="@Model.Contact.Id">Delete</a>
+        @if (Model.Contact.Audit_RecordStatus)
+        {
+            <a class="btn btn-danger me-5" asp-page="./Delete" asp-route-id="@Model.Contact.Id">Delete</a>
+        }
+        else
+        {
+            <a class="btn btn-primary me-5" asp-page="./Edit" asp-route-edit="true" asp-route-id="@Model.Contact.Id">Edit this record</a>
+        }
     }
 </form>
