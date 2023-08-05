@@ -11,5 +11,7 @@ namespace WebApp.AppServices
         Task<PagedTableReturnDto<Contacts>> GetPaged(int page);
         Task<Contacts> Get(string recordId);
 
+        public string Error { get; set; }
+
     }
 }

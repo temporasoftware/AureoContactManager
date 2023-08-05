@@ -3,23 +3,37 @@
 @{
 }
 
-<h2>Create New Contact</h2>
+<h2>@(Model.EditMode == WebApp.Helpers.EditPageHelpers.EditPageMode.Edit ? "Edit Contact" : "Create New Contact")</h2>
+
+@{
+    var disabledAttribute =  Model.EditMode == WebApp.Helpers.EditPageHelpers.EditPageMode.View ? new { disabled = "disabled" } : null;
+}
 
 <form method="post">
+    <div class="validation-summary-errors">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+
+    <input type="hidden" asp-for="Contact.Id" />
+
     <div>
         <label for="Name">Name:</label>
-        <input asp-for="Contact.Name" id="Name" type="text" />
+        @Html.TextBox("Contact.Name", null, disabledAttribute)
         <span asp-validation-for="Contact.Name" class="text-danger"></span>
     </div>
     <div>
         <label for="Contact">Contact:</label>
-        <input asp-for="Contact.Contact" id="Contact" type="text" />
+        @Html.TextBox("Contact.Contact", null, disabledAttribute)
         <span asp-validation-for="Contact.Contact" class="text-danger"></span>
     </div>
     <div>
         <label for="Email">Email:</label>
-        <input asp-for="Contact.Email" id="Email" type="text" />
+        @Html.TextBox("Contact.Email", null, disabledAttribute)
         <span asp-validation-for="Contact.Email" class="text-danger"></span>
     </div>
-    <button type="submit">Create</button>
+    <a asp-page="./Index" asp-route-id="">Cancel</a>
+    @if (Model.EditMode != Helpers.EditPageHelpers.EditPageMode.View)
+    {
+        <button type="submit">@(Model.EditMode == WebApp.Helpers.EditPageHelpers.EditPageMode.Edit ? "Save Changes" : "Save New")</button>
+    }
 </form>

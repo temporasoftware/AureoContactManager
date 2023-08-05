@@ -10,6 +10,7 @@ namespace WebApp.AppServices
 
         public AppDbContext Context { get; set; }
 
+        public string Error { get; set; }
 
         public ContactsService(AppDbContext theContext)
         {
@@ -18,6 +19,18 @@ namespace WebApp.AppServices
 
         public async Task<bool> AddNew(Contacts contact)
         {
+            if(Context.Contacts.Where(a => a.Email == contact.Email).Any())
+            {
+                Error = "There is already a record with this email";
+                return false;
+            }
+
+            if (Context.Contacts.Where(a => a.Contact == contact.Contact).Any())
+            {
+                Error = "There is already a record with this email";
+                return false;
+            }
+
             Context.Contacts.Add(contact);
 
             if (await Context.SaveChangesAsync() > 0)
@@ -47,7 +60,7 @@ namespace WebApp.AppServices
 
             var records = new PagedTableReturnDto<Contacts>()
             {
-                Result = await Context.Contacts.Skip((page - 1) * pageSize).Take(pageSize).AsNoTracking().OrderBy(a=> a.Name).ToListAsync(),
+                Result = await Context.Contacts.OrderBy(a => a.Name).Skip((page - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync(),
                 CurrentPage = page,
                 PageCount = (int)Math.Ceiling((double)totalRows / pageSize),
                 TotalRecords = totalRows

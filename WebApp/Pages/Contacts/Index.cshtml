@@ -37,7 +37,7 @@
     {
         <a asp-page="./Index" asp-route-page="@(Model.ContactsPage.CurrentPage -1)">&laquo;</a>    
     }
-    @for (int i = Model.ContactsPage.CurrentPage; i <= Model.ContactsPage.PageCount; i++)
+    @for (int i = 1; i <= Model.ContactsPage.PageCount; i++)
     {
         @if (Model.ContactsPage.CurrentPage == i)
         {
