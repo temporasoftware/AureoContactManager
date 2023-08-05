@@ -59,6 +59,16 @@ namespace WebApp.Pages.Contacts
                     return Page();
                 }
             }
+            else
+            {
+                if (await _service.Save(Contact))
+                    return RedirectToPage("./Index");
+                else
+                {
+                    ModelState.AddModelError("", _service.Error);
+                    return Page();
+                }
+            }
 
             return Page();
         }

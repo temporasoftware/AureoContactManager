@@ -17,6 +17,42 @@ namespace WebApp.AppServices
             Context = theContext;
         }
 
+        public async Task<bool> Save(Contacts contact)
+        {
+            var currentRecord = await Context.Contacts.FirstOrDefaultAsync(c => c.Id == contact.Id);
+
+            if (currentRecord == null)
+            {
+                Error = "Record not found";
+                return false;
+            }
+
+            if (Context.Contacts.Where(a => a.Email == contact.Email && a.Id != contact.Id).Any())
+            {
+                Error = "There is already a record with this email";
+                return false;
+            }
+
+            if (Context.Contacts.Where(a => a.Contact == contact.Contact && a.Id != contact.Id).Any())
+            {
+                Error = "There is already a record with this contact information";
+                return false;
+            }
+
+            currentRecord.Email = contact.Email;
+            currentRecord.Contact = contact.Contact;
+            currentRecord.Name = contact.Name;
+
+            if (await Context.SaveChangesAsync() > 0)
+                return true;
+            else
+            {
+                Error = "Error saving record";
+                return false;
+            }
+                
+        }
+
         public async Task<bool> AddNew(Contacts contact)
         {
             if(Context.Contacts.Where(a => a.Email == contact.Email).Any())
@@ -27,16 +63,27 @@ namespace WebApp.AppServices
 
             if (Context.Contacts.Where(a => a.Contact == contact.Contact).Any())
             {
-                Error = "There is already a record with this email";
+                Error = "There is already a record with this contact information";
                 return false;
             }
+
+            var newRecord = new Contacts()
+            {
+                Email = contact.Email,
+                Contact = contact.Contact,
+                Audit_RecordStatus = false,
+                Name = contact.Name
+            };
 
             Context.Contacts.Add(contact);
 
             if (await Context.SaveChangesAsync() > 0)
                 return true;
-            else 
+            else
+            {
+                Error = "Error saving record";
                 return false;
+            }
         }
 
         public async Task<List<Contacts>> GetAll()
@@ -68,5 +115,7 @@ namespace WebApp.AppServices
 
             return records;
         }
+
+
     }
 }

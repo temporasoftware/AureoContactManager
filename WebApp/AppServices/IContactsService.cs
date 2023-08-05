@@ -7,6 +7,7 @@ namespace WebApp.AppServices
     {
 
         Task<bool> AddNew(Contacts contact);
+        Task<bool> Save(Contacts contact);
         Task<List<Contacts>> GetAll();
         Task<PagedTableReturnDto<Contacts>> GetPaged(int page);
         Task<Contacts> Get(string recordId);
