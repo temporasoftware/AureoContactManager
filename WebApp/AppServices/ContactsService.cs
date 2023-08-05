@@ -29,5 +29,10 @@ namespace WebApp.AppServices
         {
             return Context.Contacts.AsNoTracking().ToListAsync();
         }
+
+        public Task<Contacts> Get(string recordId)
+        {
+            return Context.Contacts.AsNoTracking().Where(a => a.Id == recordId).FirstOrDefaultAsync();  
+        }
     }
 }
